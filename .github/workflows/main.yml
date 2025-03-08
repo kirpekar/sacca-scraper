@@ -23,10 +23,11 @@ jobs:
       - name: Run Scraper
         run: python scraper.py
 
-      - name: Commit & Push Changes
+      - name: Push changes
         run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add motorcycles.csv
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/kirpekar/sacca-scraper.git
+          git add .
           git commit -m "Update scraped data" || echo "No changes to commit"
-          git push
+          git push origin main
